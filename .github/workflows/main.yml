@@ -10,7 +10,7 @@ jobs:
     - name: Install required tools
       run: |
         sudo apt update
-        sudo apt install -y curl
+        sudo apt install -y curl libomp5
 
     - name: Download and prepare miner
       run: |
