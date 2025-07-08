@@ -1,1 +1,0 @@
-# Ai_ML_school_project
