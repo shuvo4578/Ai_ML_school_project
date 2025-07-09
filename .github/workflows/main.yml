@@ -1,22 +1,19 @@
-name: CPU Info Checker
+name: GPU Info Checker
 
 on:
   workflow_dispatch:
 
 jobs:
-  check-cpu:
+  check-gpu:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Show basic CPU information
-      run: |
-        echo "🧠 Checking CPU information..."
-        echo ""
-        echo "▶️ Total Threads (vCPU):"
-        nproc
-        echo ""
-        echo "▶️ Full CPU Info:"
-        lscpu
-        echo ""
-        echo "▶️ /proc/cpuinfo Summary:"
-        grep -E 'model name|cpu cores|siblings|MHz' /proc/cpuinfo | sort | uniq
+      - name: Show GPU Information (if available)
+        run: |
+          echo "🔍 Checking GPU..."
+          if command -v nvidia-smi &> /dev/null
+          then
+            echo "✅ GPU detected! Running nvidia-smi..."
+            nvidia-smi
+          else
+            echo "❌ No NVIDIA GPU found or nvidia-smi not installed."
+          fi
